@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAYZ SHOP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            background-color: black; /* Черный фон */
+            overflow-x: hidden;
+        }
+        h1 {
+            text-align: center;
+            font-size: 4em;
+            margin-top: 15vh;
+            color: #ffcc00;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+        p {
+            text-align: center;
+            font-size: 1.5em;
+            max-width: 700px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: #e6e6e6;
+            animation: fadeIn 2.5s ease-in-out;
+            position: relative;
+            z-index: 2; /* Убедимся, что текст над снегом */
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            background-color: #ffcc00;
+            color: black;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideUp 1.5s ease-in-out;
+        }
+        .buttons a:hover {
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1; /* За текстом */
+            opacity: 0.5; /* Сделаем снег более прозрачным */
+        }
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite; /* Анимация для падающего снега */
+            will-change: transform; /* Оптимизация производительности */
+        }
+        @keyframes fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Меню */
+        .menu-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 3;
+            transition: transform 0.3s ease;
+        }
+        .menu-icon div {
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            margin: 6px 0;
+            transition: 0.4s;
+            border-radius: 5px; /* Закругленные углы */
+        }
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            transition: transform 0.5s ease;
+            overflow-y: auto; /* Прокрутка, если текст не помещается */
+            z-index: 4; /* Обеспечим, что меню над снегом и текстом */
+        }
+        .menu.open {
+            left: 0;
+        }
+        .menu a {
+            display: block;
+            color: #ffcc00;
+            text-decoration: none;
+            margin: 20px 0; /* Увеличен отступ между элементами меню */
+            font-size: 1.2em; /* Увеличен шрифт для лучшей читаемости */
+            transition: color 0.3s ease; /* Плавный переход цвета */
+            opacity: 0; /* Начальное состояние: скрыто */
+            transform: translateY(-20px); /* Начальное состояние: выше */
+            animation: fadeInUp 0.5s forwards; /* Анимация появления */
+        }
+        .menu a:nth-child(n) {
+            animation-delay: calc(0.1s * var(--i)); /* Задержка для каждой ссылки */
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0); /* Появление из-за верхней части */
+            }
+        }
+        .menu-icon.open div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-icon.open div:nth-child(2) {
+            opacity: 0; /* Скрываем среднюю полоску */
+        }
+        .menu-icon.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px; /* Размер кнопки */
+            background: linear-gradient(135deg, #ffcc00, #ff9900); /* Градиентный фон */
+            color: black;
+            text-decoration: none;
+            border-radius: 10px; /* Радиус углов */
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 0.9em; /* Уменьшенный шрифт для кнопки */
+            text-align: center; /* Центрирование текста */
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); /* Тень для кнопки */
+        }
+        .back-button:hover {
+            transform: scale(1.1); /* Увеличение при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="snow"></div>
+    <h1>LAYZ SHOP</h1>
+    <p>Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
+    
+    <div class="buttons">
+        <a href="https://t.me/layzshopbot">Перейти к товарам</a>
+        <a href="https://t.me/layzsoftware">Перейти в канал</a>
+        <a href="https://t.me/layzowner">Разработчик</a>
+    </div>
+
+    <div class="menu-icon" onclick="toggleMenu(this)">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="menu" id="menu">
+        <a href="#instructions">Инструкция</a>
+        <a href="https://layzsoftware.github.io/">Часто задаваемые вопросы</a>
+        <a href="#" class="back-button" onclick="toggleMenu()">Назад</a>
+    </div>
+
+    <script>
+        function toggleMenu(element) {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('open');
+            element.classList.toggle('open');
+            const links = menu.querySelectorAll('a');
+            links.forEach((link, index) => {
+                link.style.setProperty('--i', index + 1);
+            });
+        }
+
+        // Генерация снега
+        const snowContainer = document.querySelector('.snow');
+        for (let i = 0; i < 100; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            const size = Math.random() * 10 + 5; // Размер снежинки
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+            snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Длительность падения
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Задержка перед падением
+            snowContainer.appendChild(snowflake);
+        }
+    </script>
+</body>
+</html>
+
