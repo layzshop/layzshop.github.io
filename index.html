@@ -10,8 +10,9 @@
             padding: 0;
             font-family: 'Montserrat', sans-serif;
             color: white;
-            background-color: black; /* Черный фон */
+            background-color: black;
             overflow-x: hidden;
+            scroll-behavior: smooth; /* Плавная прокрутка */
         }
         h1 {
             text-align: center;
@@ -29,8 +30,6 @@
             line-height: 1.6;
             color: #e6e6e6;
             animation: fadeIn 2.5s ease-in-out;
-            position: relative;
-            z-index: 2; /* Убедимся, что текст над снегом */
         }
         .buttons {
             text-align: center;
@@ -44,14 +43,13 @@
             color: black;
             text-decoration: none;
             border-radius: 30px;
-            transition: all 0.4s ease;
+            transition: transform 0.2s ease; /* Ускорение времени трансформации */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: slideUp 1.5s ease-in-out;
         }
         .buttons a:hover {
-            background: linear-gradient(135deg, #ffcc00, #ff9900);
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: #ffcc00; /* Упрощение эффекта при наведении */
+            transform: scale(1.05); /* Легкое увеличение */
         }
         .snow {
             position: absolute;
@@ -60,16 +58,16 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1; /* За текстом */
-            opacity: 0.5; /* Сделаем снег более прозрачным */
+            z-index: 1;
+            opacity: 0.5;
         }
         .snowflake {
             position: absolute;
             background-color: white;
             border-radius: 50%;
             opacity: 0.8;
-            animation: fall linear infinite; /* Анимация для падающего снега */
-            will-change: transform; /* Оптимизация производительности */
+            animation: fall linear infinite;
+            will-change: transform; /* Только для анимации снежинок */
         }
         @keyframes fall {
             0% { transform: translateY(0); }
@@ -84,85 +82,11 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Меню */
-        .menu-icon {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            z-index: 3;
-            transition: transform 0.3s ease;
-        }
-        .menu-icon div {
-            width: 100%;
-            height: 5px;
-            background-color: white;
-            margin: 6px 0;
-            transition: 0.4s;
-            border-radius: 5px; /* Закругленные углы */
-        }
-        .menu {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 300px;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            transition: transform 0.5s ease;
-            overflow-y: auto; /* Прокрутка, если текст не помещается */
-            z-index: 4; /* Обеспечим, что меню над снегом и текстом */
-        }
-        .menu.open {
-            left: 0;
-        }
-        .menu a {
-            display: block;
-            color: #ffcc00;
-            text-decoration: none;
-            margin: 20px 0;
-            font-size: 1.2em;
-            transition: color 0.3s ease;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInUp 0.5s forwards;
-        }
-        .menu a:nth-child(n) {
-            animation-delay: calc(0.1s * var(--i));
-        }
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        /* Отключение сложных анимаций при использовании мыши */
+        @media (hover: hover) {
+            .buttons a:hover {
+                transition: none; /* Упрощение перехода */
             }
-        }
-        .menu-icon.open div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .menu-icon.open div:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-icon.open div:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        .back-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #ffcc00, #ff9900);
-            color: black;
-            text-decoration: none;
-            border-radius: 10px;
-            display: inline-block;
-            transition: all 0.3s;
-            font-size: 0.9em;
-            text-align: center;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-        }
-        .back-button:hover {
-            transform: scale(1.1);
         }
 
         /* Отключение снега на больших экранах */
@@ -176,7 +100,7 @@
 <body>
     <div class="snow"></div>
     <h1>LAYZ SHOP</h1>
-    <p>Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
+    <p>Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности!</p>
     
     <div class="buttons">
         <a href="https://t.me/layzshopbot">Перейти к товарам</a>
@@ -184,39 +108,19 @@
         <a href="https://t.me/layzowner">Разработчик</a>
     </div>
 
-    <div class="menu-icon" onclick="toggleMenu(this)">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="menu" id="menu">
-        <a href="#instructions">Инструкция</a>
-        <a href="https://layzsoftware.github.io/">Часто задаваемые вопросы</a>
-        <a href="#" class="back-button" onclick="toggleMenu()">Назад</a>
-    </div>
-
     <script>
-        function toggleMenu(element) {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('open');
-            element.classList.toggle('open');
-            const links = menu.querySelectorAll('a');
-            links.forEach((link, index) => {
-                link.style.setProperty('--i', index + 1);
-            });
-        }
-
-        // Генерация снега
         const snowContainer = document.querySelector('.snow');
-        for (let i = 0; i < 100; i++) {
+        const numSnowflakes = 50; // Уменьшено количество снежинок
+
+        for (let i = 0; i < numSnowflakes; i++) {
             const snowflake = document.createElement('div');
             snowflake.className = 'snowflake';
-            const size = Math.random() * 7 + 3; // Уменьшен размер снежинок
+            const size = Math.random() * 5 + 2; // Уменьшен размер снежинок
             snowflake.style.width = `${size}px`;
             snowflake.style.height = `${size}px`;
-            snowflake.style.left = `${Math.random() * Math.min(window.innerWidth, 800)}px`; // Ограничена область анимации для больших экранов
-            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            snowflake.style.animationDelay = `${Math.random() * 5}s`;
+            snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Увеличение времени падения
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Разброс задержки для плавности
             snowContainer.appendChild(snowflake);
         }
     </script>
