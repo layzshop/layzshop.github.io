@@ -115,7 +115,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
             padding: 20px;
-            transition: transform 0.5s ease;
+            transition: left 0.5s ease; /* Изменен метод перехода для более плавного эффекта */
             overflow-y: auto; /* Прокрутка, если текст не помещается */
             z-index: 4; /* Обеспечим, что меню над снегом и текстом */
         }
@@ -209,11 +209,11 @@
             const menu = document.getElementById('menu');
             const menuIcon = document.querySelector('.menu-icon');
             if (menu.classList.contains('open') && !menu.contains(event.target) && !menuIcon.contains(event.target)) {
-                toggleMenu(menuIcon); // Закрыть меню
+                toggleMenu(menuIcon);
             }
         });
 
-        // Генерация снега
+        // Добавление снегопада
         const snowContainer = document.querySelector('.snow');
         for (let i = 0; i < 100; i++) {
             const snowflake = document.createElement('div');
