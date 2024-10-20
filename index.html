@@ -122,27 +122,27 @@
             display: block;
             color: #ffcc00;
             text-decoration: none;
-            margin: 20px 0; /* Увеличен отступ между элементами меню */
-            font-size: 1.2em; /* Увеличен шрифт для лучшей читаемости */
-            transition: color 0.3s ease; /* Плавный переход цвета */
-            opacity: 0; /* Начальное состояние: скрыто */
-            transform: translateY(-20px); /* Начальное состояние: выше */
-            animation: fadeInUp 0.5s forwards; /* Анимация появления */
+            margin: 20px 0;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInUp 0.5s forwards;
         }
         .menu a:nth-child(n) {
-            animation-delay: calc(0.1s * var(--i)); /* Задержка для каждой ссылки */
+            animation-delay: calc(0.1s * var(--i));
         }
         @keyframes fadeInUp {
             to {
                 opacity: 1;
-                transform: translateY(0); /* Появление из-за верхней части */
+                transform: translateY(0);
             }
         }
         .menu-icon.open div:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
         .menu-icon.open div:nth-child(2) {
-            opacity: 0; /* Скрываем среднюю полоску */
+            opacity: 0;
         }
         .menu-icon.open div:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
@@ -150,19 +150,26 @@
 
         .back-button {
             margin-top: 20px;
-            padding: 10px 20px; /* Размер кнопки */
-            background: linear-gradient(135deg, #ffcc00, #ff9900); /* Градиентный фон */
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
             color: black;
             text-decoration: none;
-            border-radius: 10px; /* Радиус углов */
+            border-radius: 10px;
             display: inline-block;
             transition: all 0.3s;
-            font-size: 0.9em; /* Уменьшенный шрифт для кнопки */
-            text-align: center; /* Центрирование текста */
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); /* Тень для кнопки */
+            font-size: 0.9em;
+            text-align: center;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         }
         .back-button:hover {
-            transform: scale(1.1); /* Увеличение при наведении */
+            transform: scale(1.1);
+        }
+
+        /* Отключение снега на больших экранах */
+        @media (min-width: 1200px) {
+            .snowflake {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -204,15 +211,14 @@
         for (let i = 0; i < 100; i++) {
             const snowflake = document.createElement('div');
             snowflake.className = 'snowflake';
-            const size = Math.random() * 10 + 5; // Размер снежинки
+            const size = Math.random() * 7 + 3; // Уменьшен размер снежинок
             snowflake.style.width = `${size}px`;
             snowflake.style.height = `${size}px`;
-            snowflake.style.left = `${Math.random() * window.innerWidth}px`;
-            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Длительность падения
-            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Задержка перед падением
+            snowflake.style.left = `${Math.random() * Math.min(window.innerWidth, 800)}px`; // Ограничена область анимации для больших экранов
+            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            snowflake.style.animationDelay = `${Math.random() * 5}s`;
             snowContainer.appendChild(snowflake);
         }
     </script>
 </body>
 </html>
-
