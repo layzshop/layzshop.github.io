@@ -209,18 +209,21 @@
         }
 
         // Добавление снегопада
-        const snowContainer = document.querySelector('.snow');
-        for (let i = 0; i < 100; i++) {
+        function createSnowflake() {
             const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            const size = Math.random() * 10 + 5; // Размеры от 5 до 15px
+            snowflake.classList.add('snowflake');
+            const size = Math.random() * 10 + 5; // Размер от 5 до 15px
             snowflake.style.width = `${size}px`;
             snowflake.style.height = `${size}px`;
-            snowflake.style.left = `${Math.random() * 100}vw`;
-            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Длительность от 2 до 5 секунд
-            snowflake.style.opacity = Math.random(); // Прозрачность
-            snowContainer.appendChild(snowflake);
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // 2 до 5 секунд
+            document.querySelector('.snow').appendChild(snowflake);
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000); // Удаляем снег после 5 секунд
         }
+
+        setInterval(createSnowflake, 200); // Создаем снег каждые 200 мс
     </script>
 </body>
 </html>
