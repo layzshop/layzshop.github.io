@@ -38,6 +38,15 @@
             position: relative;
             z-index: 2; /* Убедимся, что текст над снегом */
         }
+        .instructions {
+            display: none; /* Скрываем текст инструкции по умолчанию */
+            text-align: center;
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 20px auto;
+            color: #e6e6e6;
+            animation: fadeIn 2s ease-in-out;
+        }
         .buttons {
             text-align: center;
             margin-top: 40px;
@@ -180,59 +189,67 @@
 <body>
     <div class="snow"></div>
     <h1>LAYZ SHOP</h1>
-    <p>Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
+    <p>.Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
     
     <div class="buttons">
         <a href="https://t.me/layzshopbot">Перейти к товарам</a>
         <a href="https://t.me/layzsoftware">Перейти в канал</a>
         <a href="https://t.me/layzowner">Разработчик</a>
+        <a href="#" onclick="toggleInstructions(event)">Помощь</a> <!-- Добавили ссылку для помощи -->
     </div>
 
-    <div class="menu-icon" onclick="toggleMenu(this)">
+    <div class="instructions" id="instructions">
+        <p>Если у вас вылетает софт, то внимательно прочитайте инструкцию прежде чем писать создателю.</p>
+        <p>1. Скачайте файл HWID, после запустите его, потом скиньте ваш HWID в бота.</p>
+        <p>2. После успешной регистрации скачайте RAR архив софтом, распакуйте его и переместите на рабочий стол.</p>
+        <p>3. Запустите файл project и все, вы успешно запустили файл.</p>
+        <p>Не помогло? Попробуйте скачать файл библиотеки, после запустите его, чтобы файл скачал необходимые библиотеки. Если все еще не получилось, то переустановите, создайте новую папку любым названием, перекиньте содержимое RAR архива в новую папку.</p>
+        <p>Всё еще не запускается? Попробуйте скачать Visual Studio либо PyCharm и запустить через него, чтобы узнать, что за ошибка, а после скиньте скриншот ошибки в техподдержку.</p>
+    </div>
+
+    <div class="menu-icon" onclick="toggleMenu()">
         <div></div>
         <div></div>
         <div></div>
     </div>
+
     <div class="menu" id="menu">
-        <button class="close-icon" onclick="toggleMenu(document.querySelector('.menu-icon'))">&times;</button>
-        <a href="#instructions">Инструкция</a>
-        <a href="https://layzsoftware.github.io/">Часто задаваемые вопросы</a>
+        <button class="close-icon" onclick="toggleMenu()">✖</button>
+        <a href="https://t.me/layzshopbot" style="--i: 1;">Товары</a>
+        <a href="https://t.me/layzsoftware" style="--i: 2;">Канал</a>
+        <a href="https://t.me/layzowner" style="--i: 3;">Разработчик</a>
+        <a href="#" style="--i: 4;" onclick="toggleInstructions(event)">Помощь</a>
     </div>
 
     <script>
-        function toggleMenu(element) {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('open');
-            element.classList.toggle('open');
-            // Добавим анимацию для элементов меню
-            const menuLinks = menu.querySelectorAll('a');
-            menuLinks.forEach((link, index) => {
-                if (menu.classList.contains('open')) {
-                    link.style.setProperty('--i', index + 1); // Присваиваем задержку для анимации
-                    link.style.opacity = 1; // Показать элемент
-                } else {
-                    link.style.opacity = 0; // Скрыть элемент
-                }
-            });
+        function toggleInstructions(event) {
+            event.preventDefault(); // Отменяем действие по умолчанию
+            const instructions = document.getElementById('instructions');
+            instructions.style.display = instructions.style.display === 'none' || instructions.style.display === '' ? 'block' : 'none';
         }
 
-        // Функция для создания снега
-        function createSnowflake() {
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const menuIcon = document.querySelector('.menu-icon');
+            menu.classList.toggle('open');
+            menuIcon.classList.toggle('open');
+        }
+
+        // Инициализация снега
+        const snowContainer = document.querySelector('.snow');
+        const snowflakeCount = 100; // Количество снежинок
+
+        for (let i = 0; i < snowflakeCount; i++) {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
-            const size = Math.random() * 5 + 5; // Размер от 5 до 10px
-            snowflake.style.width = snowflake.style.height = `${size}px`;
+            const size = Math.random() * 10 + 5; // Размер снежинки
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
             snowflake.style.left = `${Math.random() * 100}vw`;
-            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Время падения от 2 до 5 секунд
-            document.querySelector('.snow').appendChild(snowflake);
-            snowflake.addEventListener('animationend', () => {
-                snowflake.remove(); // Удаляем снежинку после анимации
-            });
+            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Случайная продолжительность анимации
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Случайная задержка
+            snowContainer.appendChild(snowflake);
         }
-
-        // Запускаем создание снежинок
-        setInterval(createSnowflake, 200); // Каждые 200 мс
-
     </script>
 </body>
 </html>
