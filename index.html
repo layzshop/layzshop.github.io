@@ -12,14 +12,18 @@
             color: white;
             background-color: black; /* Черный фон */
             overflow-x: hidden;
+            scroll-behavior: smooth; /* Плавная прокрутка */
         }
         h1 {
             text-align: center;
             font-size: 4em;
             margin-top: 15vh;
-            color: #ffcc00;
+            background: linear-gradient(90deg, #000000, #ffcc00); /* Градиент от черного к желтому */
+            -webkit-background-clip: text; /* Применяем градиент к тексту */
+            -webkit-text-fill-color: transparent; /* Делаем текст прозрачным для градиента */
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             animation: fadeIn 2s ease-in-out;
+            transform: translateZ(0); /* Устранение дергания */
         }
         p {
             text-align: center;
@@ -203,15 +207,6 @@
                 link.style.setProperty('--i', index + 1);
             });
         }
-
-        // Закрыть меню, если кликнули вне его
-        document.addEventListener('click', (event) => {
-            const menu = document.getElementById('menu');
-            const menuIcon = document.querySelector('.menu-icon');
-            if (menu.classList.contains('open') && !menu.contains(event.target) && !menuIcon.contains(event.target)) {
-                toggleMenu(menuIcon);
-            }
-        });
 
         // Добавление снегопада
         const snowContainer = document.querySelector('.snow');
