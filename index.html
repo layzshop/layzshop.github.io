@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -189,7 +190,7 @@
 <body>
     <div class="snow"></div>
     <h1>LAYZ SHOP</h1>
-    <p>.Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
+    <p>Добро пожаловать в LAYZ SHOP — революционный бот-магазин, созданный для вашего удобства и безопасности! У нас вы найдёте широкий ассортимент уникальных товаров, от продвинутого софта для OSINT-исследований до мощных инструментов для работы с данными. Быстрый доступ к товарам, высокое качество и простота использования — всё это ждёт вас в LAYZ SHOP. Выбирайте лучшее, выбирайте LAYZ!</p>
     
     <div class="buttons">
         <a href="https://t.me/layzshopbot">Перейти к товарам</a>
@@ -200,11 +201,8 @@
 
     <div class="instructions" id="instructions">
         <p>Если у вас вылетает софт, то внимательно прочитайте инструкцию прежде чем писать создателю.</p>
-        <p>1. Скачайте файл HWID, после запустите его, потом скиньте ваш HWID в бота.</p>
-        <p>2. После успешной регистрации скачайте RAR архив софтом, распакуйте его и переместите на рабочий стол.</p>
-        <p>3. Запустите файл project и все, вы успешно запустили файл.</p>
-        <p>Не помогло? Попробуйте скачать файл библиотеки, после запустите его, чтобы файл скачал необходимые библиотеки. Если все еще не получилось, то переустановите, создайте новую папку любым названием, перекиньте содержимое RAR архива в новую папку.</p>
-        <p>Всё еще не запускается? Попробуйте скачать Visual Studio либо PyCharm и запустить через него, чтобы узнать, что за ошибка, а после скиньте скриншот ошибки в техподдержку.</p>
+        <p>1. Скачайте файл HWID, после запустите его, потом скиньте мне результат, и я помогу вам.</p>
+        <p>2. Если у вас возникли вопросы, вы можете задать их в нашем канале.</p>
     </div>
 
     <div class="menu-icon" onclick="toggleMenu()">
@@ -212,43 +210,51 @@
         <div></div>
         <div></div>
     </div>
-
+    
     <div class="menu" id="menu">
         <button class="close-icon" onclick="toggleMenu()">✖</button>
-        <a href="https://t.me/layzshopbot" style="--i: 1;">Товары</a>
-        <a href="https://t.me/layzsoftware" style="--i: 2;">Канал</a>
-        <a href="https://t.me/layzowner" style="--i: 3;">Разработчик</a>
-        <a href="#" style="--i: 4;" onclick="toggleInstructions(event)">Помощь</a>
+        <a href="https://layzsoftware.github.io" target="_blank">FAQ</a> <!-- Добавили ссылку FAQ -->
+        <a href="#section1">Раздел 1</a>
+        <a href="#section2">Раздел 2</a>
+        <a href="#section3">Раздел 3</a>
+        <a href="#section4">Раздел 4</a>
+        <a href="#section5">Раздел 5</a>
     </div>
 
     <script>
+        const snowflakes = 100; // Количество снежинок
+        const snowContainer = document.querySelector('.snow');
+
+        function createSnowflakes() {
+            for (let i = 0; i < snowflakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                const size = Math.random() * 10 + 5; // Размер снежинки от 5 до 15 пикселей
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = Math.random() * 100 + 'vw'; // Случайное положение по ширине
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // Анимация от 2 до 5 секунд
+                snowContainer.appendChild(snowflake);
+                // Удаляем снежинку после завершения анимации
+                snowflake.addEventListener('animationend', () => {
+                    snowflake.remove();
+                });
+            }
+        }
+
+        setInterval(createSnowflakes, 300); // Создаем снежинки каждые 300 миллисекунд
+
         function toggleInstructions(event) {
-            event.preventDefault(); // Отменяем действие по умолчанию
+            event.preventDefault();
             const instructions = document.getElementById('instructions');
-            instructions.style.display = instructions.style.display === 'none' || instructions.style.display === '' ? 'block' : 'none';
+            instructions.style.display = instructions.style.display === 'block' ? 'none' : 'block';
         }
 
         function toggleMenu() {
             const menu = document.getElementById('menu');
-            const menuIcon = document.querySelector('.menu-icon');
+            const icon = document.querySelector('.menu-icon');
             menu.classList.toggle('open');
-            menuIcon.classList.toggle('open');
-        }
-
-        // Инициализация снега
-        const snowContainer = document.querySelector('.snow');
-        const snowflakeCount = 100; // Количество снежинок
-
-        for (let i = 0; i < snowflakeCount; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            const size = Math.random() * 10 + 5; // Размер снежинки
-            snowflake.style.width = `${size}px`;
-            snowflake.style.height = `${size}px`;
-            snowflake.style.left = `${Math.random() * 100}vw`;
-            snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Случайная продолжительность анимации
-            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Случайная задержка
-            snowContainer.appendChild(snowflake);
+            icon.classList.toggle('open');
         }
     </script>
 </body>
